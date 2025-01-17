@@ -36,10 +36,10 @@ public:
     template <typename Allocator>
     std::vector<Message, Allocator> consume_batch(size_t batch_size, const Allocator& alloc) const;
 
-    std::vector<Message> consume_batch(size_t batch_size) const;
+    std::vector<Message> consume_batch(size_t max_batch_size) const;
 
     template <typename Allocator>
-    std::vector<Message, Allocator> consume_batch(size_t max_batch_size, std::chrono::milliseconds timeout, Allocator& alloc) const;
+    std::vector<Message, Allocator> consume_batch(size_t max_batch_size, std::chrono::milliseconds timeout, const Allocator& alloc) const;
 
     std::vector<Message> consume_batch(size_t max_batch_size, std::chrono::milliseconds timeout) const;
 
@@ -67,8 +67,8 @@ private:
 using QueueList = std::vector<Queue>;
 
 template <typename Allocator>
-std::vector<Message, Allocator> Queue::consume_batch(size_t batch_size, const Allocator& alloc) const {
-    return consume_batch(batch_size, timeout_ms_, alloc);
+std::vector<Message, Allocator> Queue::consume_batch(size_t max_batch_size, const Allocator& alloc) const {
+    return consume_batch(max_batch_size, timeout_ms_, alloc);
 }
 
 template <typename Allocator>
